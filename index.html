@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Rock Paper Scissors!</h1>
+    <p>0 - Rock</p>
+    <p>1 - Paper</p>
+    <p>2 - Scissors</p>
+    <br>
+    <label for="choice">Enter your choice (0, 1, or 2):</label>
+    <input type="text" id="choice">
+    <button onclick="playRound()">Play</button>
+    <br>
+    <br>
+    <p id="result"></p>
+    <p id="score"></p>
+    <br>
+    <button onclick="resetGame()">Reset</button>
+  </div>
+
+  <script>
+    let playerScore = 0;
+    let computerScore = 0;
+
+    function generateComputerChoice() {
+      return Math.floor(Math.random() * 3); // Generates a random number between 0 and 2
+    }
+
+    function determineWinner(playerChoice, computerChoice) {
+      if (playerChoice === computerChoice) {
+        return "It's a tie!";
+      } else if (
+        (playerChoice === 0 && computerChoice === 1) ||
+        (playerChoice === 1 && computerChoice === 2) ||
+        (playerChoice === 2 && computerChoice === 0)
+      ) {
+        playerScore++;
+        return "You win!";
+      } else {
+        computerScore++;
+        return "Computer wins!";
+      }
+    }
+
+    function displayScore() {
+      document.getElementById("score").textContent = `Score - Player: ${playerScore}, Computer: ${computerScore}`;
+    }
+
+    function playRound() {
+      const playerChoice = parseInt(document.getElementById("choice").value);
+
+      if (playerChoice < 0 || playerChoice > 2 || isNaN(playerChoice)) {
+        document.getElementById("result").textContent = "Invalid choice. Please enter a number between 0 and 2.";
+        return;
+      }
+
+      const computerChoice = generateComputerChoice();
+      const playerChoices = ["Rock", "Paper", "Scissors"];
+
+      document.getElementById("result").textContent = `You chose: ${playerChoices[playerChoice]}, Computer chose: ${playerChoices[computerChoice]}`;
+      document.getElementById("result").textContent = determineWinner(playerChoice, computerChoice);
+      displayScore();
+    }
+
+    function resetGame() {
+      playerScore = 0;
+      computerScore = 0;
+      document.getElementById("result").textContent = "";
+      displayScore();
+    }
+  </script>
+</body>
+      </html>
